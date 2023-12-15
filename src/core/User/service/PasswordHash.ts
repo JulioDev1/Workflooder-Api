@@ -6,9 +6,6 @@ export class PasswordHash {
     return encryptedPassword;
   }
   async comparePass(password: string, userPassword: string) {
-    const comparePassword = await bcrypt.compare(password, userPassword);
-    if (!comparePassword) {
-      throw new Error("password is incorrectly");
-    }
+    return await bcrypt.compare(password, userPassword);
   }
 }

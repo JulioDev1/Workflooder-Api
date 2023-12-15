@@ -15,9 +15,9 @@ export class Register implements UseCase<Input, Input> {
 
   async execute({ name, email, password }: Input): Promise<Input> {
     const emailExists = await this.repository.findByEmail(email);
-    if (emailExists) {
-      throw new Error("user already exists");
-    }
+
+    if (emailExists) throw new Error("user already exists");
+
     const hashed = await this.encrypt.encrypt(password);
     const user = await this.repository.create({
       name,
