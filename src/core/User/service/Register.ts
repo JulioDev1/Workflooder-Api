@@ -1,4 +1,4 @@
-import { UseCase } from "src/core/shared/useCase";
+import { UseCase } from "../../shared/useCase";
 import { RepositoryUser } from "./RegisterRepositoryUser";
 import { PasswordHash } from "./PasswordHash";
 

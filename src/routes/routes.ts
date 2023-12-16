@@ -9,6 +9,7 @@ import { Register } from "../core/User/service/Register";
 import RepositoryPrismaPg from "../external/prisma/RepositoryPrismaPg";
 import { Authenticate } from "../core/User/service/Authenticate";
 import AuthenticateController from "../controllers/AuthenticateController";
+import { EnsureAuthenticated } from "../Middleware/ensureAuthenticated";
 
 export async function routes(
   fastify: FastifyInstance,
@@ -28,6 +29,13 @@ export async function routes(
     "/authenticate-user",
     async (request: FastifyRequest, reply: FastifyReply) => {
       return new AuthenticateController(authenticate).handle(request, reply);
+    }
+  );
+  fastify.get(
+    "/view-invoices",
+    { preHandler: EnsureAuthenticated },
+    async (request: FastifyRequest, reply: FastifyReply) => {
+      return reply.send("bem vindo usuario");
     }
   );
 }

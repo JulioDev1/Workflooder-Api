@@ -24,7 +24,7 @@ export class Authenticate implements UseCase<Auth, Token> {
 
     const token = sign({}, "5b1305ce-2409-4370-bbe4-5b201de352d3", {
       subject: user.id,
-      expiresIn: "20s",
+      expiresIn: "1h",
     });
     return { token };
   }
