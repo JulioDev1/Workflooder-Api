@@ -3,17 +3,22 @@ import { Auth } from "../model/User";
 import { PasswordHash } from "./PasswordHash";
 import RepositoryPrismaPg from "../../../external/prisma/RepositoryPrismaPg";
 import { sign } from "jsonwebtoken";
+import {
+  GenerateRefreshTokens,
+  RefreshToken,
+} from "../../../core/gateways/GenerateRefreshToken";
 
-type Token = {
+type Output = {
   token: string;
+  refreshToken: RefreshToken;
 };
 
-export class Authenticate implements UseCase<Auth, Token> {
+export class Authenticate implements UseCase<Auth, Output> {
   readonly encrypt: PasswordHash;
   constructor(readonly repository: RepositoryPrismaPg) {
     this.encrypt = new PasswordHash();
   }
-  async execute({ email, password }: Auth): Promise<Token> {
+  async execute({ email, password }: Auth): Promise<Output> {
     const user = await this.repository.findByEmail(email);
 
     if (!user) throw new Error("password or email incorrectly");
@@ -26,6 +31,10 @@ export class Authenticate implements UseCase<Auth, Token> {
       subject: user.id,
       expiresIn: "1h",
     });
-    return { token };
+
+    const generateRefreshToken = new GenerateRefreshTokens();
+
+    const refreshToken = await generateRefreshToken.execute(user.id!);
+    return { token, refreshToken };
   }
 }
