@@ -10,6 +10,7 @@ import RepositoryPrismaPg from "../external/prisma/RepositoryPrismaPg";
 import { Authenticate } from "../core/User/service/Authenticate";
 import AuthenticateController from "../controllers/AuthenticateController";
 import { EnsureAuthenticated } from "../Middleware/ensureAuthenticated";
+import { RefreshTokenController } from "../controllers/RefreshTokenController";
 
 export async function routes(
   fastify: FastifyInstance,
@@ -36,6 +37,12 @@ export async function routes(
     { preHandler: EnsureAuthenticated },
     async (request: FastifyRequest, reply: FastifyReply) => {
       return reply.send("bem vindo usuario");
+    }
+  );
+  fastify.post(
+    "/refresh-token",
+    async (request: FastifyRequest, reply: FastifyReply) => {
+      return new RefreshTokenController().handle(request, reply);
     }
   );
 }

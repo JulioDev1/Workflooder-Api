@@ -16,12 +16,12 @@ export class GenerateRefreshTokens implements UseCase<userId, RefreshToken> {
   }
 
   async execute(userId: string): Promise<RefreshToken> {
-    const expiresIn = dayjs().add(15, "seconds").unix();
+    const expiresIn = dayjs().add(15, "second").unix();
 
     const generateRefreshTokens = await this.prisma.refresh_Token.create({
       data: {
         userId,
-        expiresIn,
+        expiresIn: expiresIn,
       },
     });
     return generateRefreshTokens;
