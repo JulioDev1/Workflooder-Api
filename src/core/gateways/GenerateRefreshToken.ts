@@ -7,7 +7,9 @@ export type RefreshToken = {
   expiresIn: number;
   userId: string;
 };
+
 type userId = string;
+
 export class GenerateRefreshTokens implements UseCase<userId, RefreshToken> {
   private prisma: PrismaClient;
 

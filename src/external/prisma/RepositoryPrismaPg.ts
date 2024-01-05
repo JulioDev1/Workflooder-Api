@@ -1,6 +1,7 @@
 import { PrismaClient } from "@prisma/client";
 import { User } from "../../core/User/model/User";
 import { RepositoryUser } from "../../core/User/service/RegisterRepositoryUser";
+import { RefreshToken } from "src/core/gateways/GenerateRefreshToken";
 
 export default class RepositoryPrismaPg implements RepositoryUser {
   private prisma: PrismaClient;
@@ -16,9 +17,35 @@ export default class RepositoryPrismaPg implements RepositoryUser {
       },
     });
   }
+
   create({ name, email, password }: User): Promise<User> {
     return this.prisma.user.create({
       data: { name, email, password, updateAt: new Date() },
+    });
+  }
+
+  createRefreshToken({
+    userId,
+    expiresIn,
+  }: RefreshToken): Promise<RefreshToken> {
+    return this.prisma.refresh_Token.create({
+      data: { userId, expiresIn },
+    });
+  }
+
+  findRefreshToken(id: string) {
+    return this.prisma.refresh_Token.findFirst({
+      where: {
+        id,
+      },
+    });
+  }
+
+  deleteSpiredToken(id: string) {
+    return this.prisma.refresh_Token.deleteMany({
+      where: {
+        userId: id,
+      },
     });
   }
 }

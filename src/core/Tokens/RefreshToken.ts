@@ -25,6 +25,7 @@ export class RefreshTokenUser implements UseCase<string, any> {
     });
 
     if (!refreshToken) throw new Error("token is invalid ");
+
     const refreshTokenExpired = dayjs().isAfter(
       dayjs.unix(refreshToken.expiresIn)
     );
