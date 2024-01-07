@@ -11,6 +11,7 @@ import { Authenticate } from "../core/User/service/Authenticate";
 import AuthenticateController from "../controllers/AuthenticateController";
 import { EnsureAuthenticated } from "../Middleware/ensureAuthenticated";
 import { RefreshTokenController } from "../controllers/RefreshTokenController";
+import { RefreshTokenUser } from "../core/Tokens/RefreshToken";
 
 export async function routes(
   fastify: FastifyInstance,
@@ -19,6 +20,7 @@ export async function routes(
   const repository = new RepositoryPrismaPg();
   const register = new Register(repository);
   const authenticate = new Authenticate(repository);
+  const refreshToken = new RefreshTokenUser(repository);
 
   fastify.post(
     "/register-user",
@@ -42,7 +44,7 @@ export async function routes(
   fastify.post(
     "/refresh-token",
     async (request: FastifyRequest, reply: FastifyReply) => {
-      return new RefreshTokenController().handle(request, reply);
+      return new RefreshTokenController(refreshToken).handle(request, reply);
     }
   );
 }

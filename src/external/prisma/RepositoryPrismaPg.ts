@@ -36,7 +36,7 @@ export default class RepositoryPrismaPg implements RepositoryUser {
   findRefreshToken(id: string) {
     return this.prisma.refresh_Token.findFirst({
       where: {
-        id,
+        id: id,
       },
     });
   }

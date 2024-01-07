@@ -5,15 +5,15 @@ type token = {
   refreshToken: string;
 };
 export class RefreshTokenController {
+  constructor(readonly useCase: RefreshTokenUser) {}
+
   async handle(request: FastifyRequest, reply: FastifyReply) {
     try {
       const body = request.body as token;
 
       const { refreshToken } = body;
 
-      const refresh_tokens = new RefreshTokenUser();
-
-      const token = await refresh_tokens.execute(refreshToken);
+      const token = await this.useCase.execute(refreshToken);
 
       reply.send(token);
     } catch (error) {
