@@ -1,6 +1,6 @@
+import { PrismaClient } from "@prisma/client";
 import dayjs from "dayjs";
 import { UseCase } from "../shared/useCase";
-import { PrismaClient } from "@prisma/client";
 
 export type RefreshToken = {
   id: string;

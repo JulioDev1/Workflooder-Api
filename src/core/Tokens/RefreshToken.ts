@@ -1,12 +1,11 @@
-import { PrismaClient } from "@prisma/client";
-import { UseCase } from "../shared/useCase";
-import { GenerateTokenProvider } from "../gateways/GenerateTokenProvider";
 import dayjs from "dayjs";
+import RepositoryPrismaPg from "src/external/prisma/RepositoryPrismaPg";
 import {
   GenerateRefreshTokens,
   RefreshToken,
 } from "../gateways/GenerateRefreshToken";
-import RepositoryPrismaPg from "src/external/prisma/RepositoryPrismaPg";
+import { GenerateTokenProvider } from "../gateways/GenerateTokenProvider";
+import { UseCase } from "../shared/useCase";
 
 type token = {
   token: string;
@@ -32,6 +31,7 @@ export class RefreshTokenUser implements UseCase<string, any> {
       await this.repository.deleteSpiredToken(refreshToken.userId);
 
       const generateRefreshTokenProvider = new GenerateRefreshTokens();
+
       const newRefreshToken = await generateRefreshTokenProvider.execute(
         refreshToken.userId
       );
