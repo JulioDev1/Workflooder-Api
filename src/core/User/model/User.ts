@@ -10,3 +10,19 @@ export interface Auth {
   email: string;
   password: string;
 }
+
+type Number = {
+  id?: string;
+  ddd: string;
+  number: string;
+};
+export type Technology = {
+  name: string;
+};
+export type Curriculum = {
+  id?: string;
+  title: string;
+  technology: Technology[];
+  description: string;
+  userId: string;
+};

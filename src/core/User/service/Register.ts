@@ -1,6 +1,6 @@
 import { UseCase } from "../../shared/useCase";
-import { RepositoryUser } from "./RegisterRepositoryUser";
 import { PasswordHash } from "./PasswordHash";
+import { RepositoryUser } from "./RegisterRepositoryUser";
 
 export type Input = {
   name: string;

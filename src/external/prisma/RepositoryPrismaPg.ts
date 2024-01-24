@@ -1,7 +1,7 @@
 import { PrismaClient } from "@prisma/client";
-import { User } from "../../core/User/model/User";
+import { Curriculum, Technology, User } from "../../core/User/model/User";
 import { RepositoryUser } from "../../core/User/service/RegisterRepositoryUser";
-import { RefreshToken } from "src/core/gateways/GenerateRefreshToken";
+import { RefreshToken } from "../../core/gateways/GenerateRefreshToken";
 
 export default class RepositoryPrismaPg implements RepositoryUser {
   private prisma: PrismaClient;
@@ -45,6 +45,26 @@ export default class RepositoryPrismaPg implements RepositoryUser {
     return this.prisma.refresh_Token.deleteMany({
       where: {
         userId: id,
+      },
+    });
+  }
+
+  createCurriculum({
+    title,
+    technology,
+    description,
+    userId,
+  }: Curriculum): Promise<Curriculum> {
+    return this.prisma.curriculum.create({
+      data: {
+        title,
+        technology: {
+          createMany: {
+            data: technology.map((tecs: Technology) => ({ name: tecs.name })),
+          },
+        },
+        description,
+        userId,
       },
     });
   }
