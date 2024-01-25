@@ -16,13 +16,14 @@ type Number = {
   ddd: string;
   number: string;
 };
+
 export type Technology = {
   name: string;
 };
-export type Curriculum = {
+export interface Curriculum {
   id?: string;
   title: string;
   technology: Technology[];
   description: string;
   userId: string;
-};
+}

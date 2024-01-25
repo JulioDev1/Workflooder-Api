@@ -21,6 +21,7 @@ export default class RepositoryPrismaPg implements RepositoryUser {
   create({ name, email, password }: User): Promise<User> {
     return this.prisma.user.create({
       data: { name, email, password, updateAt: new Date() },
+      include: { number: true },
     });
   }
 
@@ -63,8 +64,12 @@ export default class RepositoryPrismaPg implements RepositoryUser {
             data: technology.map((tecs: Technology) => ({ name: tecs.name })),
           },
         },
+
         description,
         userId,
+      },
+      include: {
+        technology: true,
       },
     });
   }

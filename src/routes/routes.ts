@@ -4,14 +4,19 @@ import {
   FastifyReply,
   FastifyRequest,
 } from "fastify";
+import {
+  CustomFastifyRequest,
+  EnsureAuthenticated,
+} from "../Middleware/ensureAuthenticated";
+import AuthenticateController from "../controllers/AuthenticateController";
+import CreateCurriculumController from "../controllers/CreateCurriculumController";
+import { RefreshTokenController } from "../controllers/RefreshTokenController";
 import RegisterController from "../controllers/RegisterController";
+import { RefreshTokenUser } from "../core/Tokens/RefreshToken";
+import { Authenticate } from "../core/User/service/Authenticate";
+import { CurriculumBuilder } from "../core/User/service/CurriculumBuilder";
 import { Register } from "../core/User/service/Register";
 import RepositoryPrismaPg from "../external/prisma/RepositoryPrismaPg";
-import { Authenticate } from "../core/User/service/Authenticate";
-import AuthenticateController from "../controllers/AuthenticateController";
-import { EnsureAuthenticated } from "../Middleware/ensureAuthenticated";
-import { RefreshTokenController } from "../controllers/RefreshTokenController";
-import { RefreshTokenUser } from "../core/Tokens/RefreshToken";
 
 export async function routes(
   fastify: FastifyInstance,
@@ -21,7 +26,7 @@ export async function routes(
   const register = new Register(repository);
   const authenticate = new Authenticate(repository);
   const refreshToken = new RefreshTokenUser(repository);
-
+  const createCurriculum = new CurriculumBuilder(repository);
   fastify.post(
     "/register-user",
     async (request: FastifyRequest, reply: FastifyReply) => {
@@ -37,14 +42,24 @@ export async function routes(
   fastify.get(
     "/view-invoices",
     { preHandler: EnsureAuthenticated },
-    async (request: FastifyRequest, reply: FastifyReply) => {
-      return reply.send("bem vindo usuario");
+    async (request: CustomFastifyRequest, reply: FastifyReply) => {
+      return reply.send("bem vindo usuario " + request.user?.id);
     }
   );
   fastify.post(
     "/refresh-token",
     async (request: FastifyRequest, reply: FastifyReply) => {
       return new RefreshTokenController(refreshToken).handle(request, reply);
+    }
+  );
+  fastify.post(
+    "/create-curriculum",
+    { preHandler: EnsureAuthenticated },
+    async (request: CustomFastifyRequest, reply: FastifyReply) => {
+      return new CreateCurriculumController(createCurriculum).handle(
+        request,
+        reply
+      );
     }
   );
 }
