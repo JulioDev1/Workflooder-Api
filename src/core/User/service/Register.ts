@@ -1,4 +1,5 @@
 import { UseCase } from "../../shared/useCase";
+import { Number } from "../model/User";
 import { PasswordHash } from "./PasswordHash";
 import { RepositoryUser } from "./RegisterRepositoryUser";
 
@@ -6,6 +7,7 @@ export type Input = {
   name: string;
   email: string;
   password: string;
+  number: Number[];
 };
 export class Register implements UseCase<Input, Input> {
   private encrypt: PasswordHash;
@@ -13,7 +15,12 @@ export class Register implements UseCase<Input, Input> {
     this.encrypt = new PasswordHash();
   }
 
-  async execute({ name, email, password }: Input): Promise<Input> {
+  async execute({
+    name,
+    email,
+    password,
+    number: [{ ddd, number }],
+  }: Input): Promise<Input> {
     const emailExists = await this.repository.findByEmail(email);
 
     if (emailExists) throw new Error("user already exists");
@@ -23,6 +30,7 @@ export class Register implements UseCase<Input, Input> {
       name,
       email,
       password: hashed,
+      number: [{ ddd, number }],
     });
 
     return user;

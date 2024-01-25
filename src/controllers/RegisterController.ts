@@ -8,9 +8,19 @@ export default class RegisterController {
     try {
       const body = request.body as Input;
 
-      const { name, email, password } = body;
+      const {
+        name,
+        email,
+        password,
+        number: [{ ddd, number }],
+      } = body;
 
-      const user = await this.useCase.execute({ name, email, password });
+      const user = await this.useCase.execute({
+        name,
+        email,
+        password,
+        number: [{ ddd, number }],
+      });
 
       reply.send(user);
     } catch (error: any) {

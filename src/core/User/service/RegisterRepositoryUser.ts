@@ -3,7 +3,7 @@ import { Curriculum, User } from "../model/User";
 
 export interface RepositoryUser {
   findByEmail(email: string): Promise<User | null>;
-  create({ name, email, password }: User): Promise<User>;
+  create({ name, email, password, number }: User): Promise<User>;
   createRefreshToken({
     userId,
     expiresIn,

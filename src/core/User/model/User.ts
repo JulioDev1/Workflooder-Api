@@ -1,8 +1,15 @@
+export type Number = {
+  id?: string;
+  ddd: string;
+  number: string;
+};
+
 export interface User {
   id?: string;
   name: string;
   email: string;
   password: string;
+  number: Number[];
   createAt?: Date;
   updateAt?: Date;
 }
@@ -10,12 +17,6 @@ export interface Auth {
   email: string;
   password: string;
 }
-
-type Number = {
-  id?: string;
-  ddd: string;
-  number: string;
-};
 
 export type Technology = {
   name: string;

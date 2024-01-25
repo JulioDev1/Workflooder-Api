@@ -15,12 +15,24 @@ export default class RepositoryPrismaPg implements RepositoryUser {
       where: {
         email,
       },
+      include: { number: true },
     });
   }
 
-  create({ name, email, password }: User): Promise<User> {
+  create({ name, email, password, number }: User): Promise<User> {
     return this.prisma.user.create({
-      data: { name, email, password, updateAt: new Date() },
+      data: {
+        name,
+        email,
+        password,
+        updateAt: new Date(),
+        number: {
+          create: number.map((data) => ({
+            ddd: data.ddd,
+            number: data.number,
+          })),
+        },
+      },
       include: { number: true },
     });
   }
