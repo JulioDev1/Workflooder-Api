@@ -52,6 +52,7 @@ export async function routes(
       return new RefreshTokenController(refreshToken).handle(request, reply);
     }
   );
+
   fastify.post(
     "/create-curriculum",
     { preHandler: EnsureAuthenticated },
