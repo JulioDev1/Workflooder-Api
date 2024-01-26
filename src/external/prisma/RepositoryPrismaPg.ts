@@ -96,4 +96,18 @@ export default class RepositoryPrismaPg implements RepositoryUser {
       },
     });
   }
+
+  getUserCurriculum(id: string): Promise<Curriculum | null> {
+    return this.prisma.curriculum.findUnique({
+      where: {
+        id,
+      },
+      select: {
+        title: true,
+        technology: true,
+        description: true,
+        userId: true,
+      },
+    });
+  }
 }
