@@ -10,11 +10,13 @@ import {
 } from "../Middleware/ensureAuthenticated";
 import AuthenticateController from "../controllers/AuthenticateController";
 import CreateCurriculumController from "../controllers/CreateCurriculumController";
+import { GetAllCurriculumController } from "../controllers/GetAllCurriculumController";
 import { RefreshTokenController } from "../controllers/RefreshTokenController";
 import RegisterController from "../controllers/RegisterController";
 import { RefreshTokenUser } from "../core/Tokens/RefreshToken";
 import { Authenticate } from "../core/User/service/Authenticate";
 import { CurriculumBuilder } from "../core/User/service/CurriculumBuilder";
+import { GetAllCurriculum } from "../core/User/service/GetAllCurriculum";
 import { Register } from "../core/User/service/Register";
 import RepositoryPrismaPg from "../external/prisma/RepositoryPrismaPg";
 
@@ -27,6 +29,8 @@ export async function routes(
   const authenticate = new Authenticate(repository);
   const refreshToken = new RefreshTokenUser(repository);
   const createCurriculum = new CurriculumBuilder(repository);
+  const getCurriculum = new GetAllCurriculum(repository);
+
   fastify.post(
     "/register-user",
     async (request: FastifyRequest, reply: FastifyReply) => {
@@ -58,6 +62,16 @@ export async function routes(
     { preHandler: EnsureAuthenticated },
     async (request: CustomFastifyRequest, reply: FastifyReply) => {
       return new CreateCurriculumController(createCurriculum).handle(
+        request,
+        reply
+      );
+    }
+  );
+
+  fastify.get(
+    "/get-curriculum",
+    async (request: FastifyRequest, reply: FastifyReply) => {
+      return new GetAllCurriculumController(getCurriculum).handle(
         request,
         reply
       );

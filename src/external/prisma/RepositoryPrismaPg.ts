@@ -85,4 +85,15 @@ export default class RepositoryPrismaPg implements RepositoryUser {
       },
     });
   }
+
+  getAllCurriculum(): Promise<Curriculum[]> {
+    return this.prisma.curriculum.findMany({
+      select: {
+        title: true,
+        technology: true,
+        description: true,
+        userId: true,
+      },
+    });
+  }
 }
