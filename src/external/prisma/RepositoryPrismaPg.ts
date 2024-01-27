@@ -110,4 +110,18 @@ export default class RepositoryPrismaPg implements RepositoryUser {
       },
     });
   }
+
+  getUserLoggedCurriculum(userId: string): Promise<Curriculum | null> {
+    return this.prisma.curriculum.findFirst({
+      where: {
+        userId: userId,
+      },
+      select: {
+        title: true,
+        technology: true,
+        description: true,
+        userId: true,
+      },
+    });
+  }
 }
