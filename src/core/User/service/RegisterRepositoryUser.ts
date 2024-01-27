@@ -16,4 +16,8 @@ export interface RepositoryUser {
     description,
     userId,
   }: Curriculum): Promise<Curriculum>;
+  getAllCurriculum(): Promise<Curriculum[]>;
+  getUserCurriculum(id: string): Promise<Curriculum | null>;
+  getUserLoggedCurriculum(userId: string): Promise<Curriculum | null>;
+  updateUserCurriculum(userId: string): Promise<Curriculum>;
 }
