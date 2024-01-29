@@ -67,6 +67,20 @@ export default class RepositoryPrismaPg implements RepositoryUser {
     });
   }
 
+  getUserProfile(id: string) {
+    return this.prisma.user.findUnique({
+      where: {
+        id: id,
+      },
+      select: {
+        name: true,
+        email: true,
+        password: false,
+        number: true,
+      },
+    });
+  }
+
   createCurriculum({
     title,
     technology,
@@ -150,7 +164,6 @@ export default class RepositoryPrismaPg implements RepositoryUser {
     userId,
     id,
   }: CurriculumInput): Promise<CurriculumInput> {
-    console.log("dados:" + description, title, userId, id);
     return this.prisma.curriculum.update({
       where: {
         id: id,
