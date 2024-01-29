@@ -1,4 +1,4 @@
-import { UseCase } from "src/core/shared/useCase";
+import { UseCase } from "../../../core/shared/useCase";
 import { Curriculum, Technology } from "../model/User";
 import { RepositoryUser } from "./RegisterRepositoryUser";
 

@@ -1,6 +1,6 @@
 import { UseCase } from "../../../core/shared/useCase";
 import RepositoryPrismaPg from "../../../external/prisma/RepositoryPrismaPg";
-import { Technology } from "../model/User";
+import { Curriculum, Technology } from "../model/User";
 type Output = {
   title: string;
   description: string;
@@ -8,9 +8,11 @@ type Output = {
   technology: Technology[];
 };
 
-export class GetUserCurriculumLogged implements UseCase<string, Output | null> {
+export class GetUserCurriculumLogged
+  implements UseCase<string, Curriculum | null>
+{
   constructor(readonly repository: RepositoryPrismaPg) {}
-  async execute(userId: string): Promise<Output | null> {
+  async execute(userId: string): Promise<Curriculum | null> {
     return await this.repository.getUserLoggedCurriculum(userId);
   }
 }

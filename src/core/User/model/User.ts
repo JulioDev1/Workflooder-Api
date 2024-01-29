@@ -19,12 +19,20 @@ export interface Auth {
 }
 
 export type Technology = {
+  id?: string;
+  curriculumId?: string;
   name: string;
 };
 export interface Curriculum {
   id?: string;
   title: string;
   technology: Technology[];
+  description: string;
+  userId: string;
+}
+export interface CurriculumInput {
+  id?: string;
+  title: string;
   description: string;
   userId: string;
 }

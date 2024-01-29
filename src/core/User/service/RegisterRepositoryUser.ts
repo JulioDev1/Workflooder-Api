@@ -1,5 +1,5 @@
 import { RefreshToken } from "src/core/gateways/GenerateRefreshToken";
-import { Curriculum, User } from "../model/User";
+import { Curriculum, CurriculumInput, User } from "../model/User";
 
 export interface RepositoryUser {
   findByEmail(email: string): Promise<User | null>;
@@ -19,5 +19,10 @@ export interface RepositoryUser {
   getAllCurriculum(): Promise<Curriculum[]>;
   getUserCurriculum(id: string): Promise<Curriculum | null>;
   getUserLoggedCurriculum(userId: string): Promise<Curriculum | null>;
-  updateUserCurriculum(userId: string): Promise<Curriculum>;
+  updateUserCurriculum({
+    description,
+    title,
+    userId,
+    id,
+  }: Curriculum): Promise<CurriculumInput>;
 }

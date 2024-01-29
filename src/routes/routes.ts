@@ -6,6 +6,7 @@ import {
 } from "fastify";
 import {
   CustomFastifyRequest,
+  CustomFastifyRequestUser,
   EnsureAuthenticated,
 } from "../Middleware/ensureAuthenticated";
 import AuthenticateController from "../controllers/AuthenticateController";
@@ -15,6 +16,7 @@ import { GetCurriculumUserLoggedController } from "../controllers/GetCurriculumU
 import { GetUserByIdController } from "../controllers/GetUserByIDController";
 import { RefreshTokenController } from "../controllers/RefreshTokenController";
 import RegisterController from "../controllers/RegisterController";
+import UpdateCurriculumController from "../controllers/UpdateCurriculumController";
 import { RefreshTokenUser } from "../core/Tokens/RefreshToken";
 import { Authenticate } from "../core/User/service/Authenticate";
 import { CurriculumBuilder } from "../core/User/service/CurriculumBuilder";
@@ -22,6 +24,7 @@ import { GetAllCurriculum } from "../core/User/service/GetAllCurriculum";
 import { GetUserCurriculum } from "../core/User/service/GetUserCurriculum";
 import { GetUserCurriculumLogged } from "../core/User/service/GetUserCurriculumlogged";
 import { Register } from "../core/User/service/Register";
+import { UpdateCurriculum } from "../core/User/service/UpdateCurrriculum";
 import RepositoryPrismaPg from "../external/prisma/RepositoryPrismaPg";
 
 export async function routes(
@@ -36,6 +39,7 @@ export async function routes(
   const getCurriculum = new GetAllCurriculum(repository);
   const getUserById = new GetUserCurriculum(repository);
   const getUserLogged = new GetUserCurriculumLogged(repository);
+  const updateCurriculum = new UpdateCurriculum(repository);
 
   fastify.post(
     "/register-user",
@@ -101,6 +105,17 @@ export async function routes(
     { preHandler: EnsureAuthenticated },
     async (request: CustomFastifyRequest, reply: FastifyReply) => {
       return new GetCurriculumUserLoggedController(getUserLogged).handle(
+        request,
+        reply
+      );
+    }
+  );
+
+  fastify.put<{ Params: { id: string } }>(
+    "/update-curriculum/:id",
+    { preHandler: EnsureAuthenticated },
+    async (request: CustomFastifyRequestUser, reply: FastifyReply) => {
+      return new UpdateCurriculumController(updateCurriculum).handle(
         request,
         reply
       );

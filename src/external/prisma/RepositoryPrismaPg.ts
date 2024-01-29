@@ -1,5 +1,10 @@
 import { PrismaClient } from "@prisma/client";
-import { Curriculum, Technology, User } from "../../core/User/model/User";
+import {
+  Curriculum,
+  CurriculumInput,
+  Technology,
+  User,
+} from "../../core/User/model/User";
 import { RepositoryUser } from "../../core/User/service/RegisterRepositoryUser";
 import { RefreshToken } from "../../core/gateways/GenerateRefreshToken";
 
@@ -122,6 +127,48 @@ export default class RepositoryPrismaPg implements RepositoryUser {
         description: true,
         userId: true,
       },
+    });
+  }
+
+  getCurriculumById(id: string): Promise<Curriculum | null> {
+    return this.prisma.curriculum.findUnique({
+      where: {
+        id,
+      },
+      select: {
+        title: true,
+        technology: true,
+        description: true,
+        userId: true,
+      },
+    });
+  }
+
+  updateUserCurriculum({
+    description,
+    title,
+    userId,
+    id,
+  }: CurriculumInput): Promise<CurriculumInput> {
+    console.log("dados:" + description, title, userId, id);
+    return this.prisma.curriculum.update({
+      where: {
+        id: id,
+      },
+      data: {
+        title,
+        description,
+        userId,
+      },
+      include: {
+        technology: true,
+      },
+    });
+  }
+  updateTechnology({ curriculumId, name }: Technology): Promise<any> {
+    return this.prisma.technology.updateMany({
+      where: { curriculumId },
+      data: { name },
     });
   }
 }

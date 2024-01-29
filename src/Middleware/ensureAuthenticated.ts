@@ -4,7 +4,10 @@ import { verify } from "jsonwebtoken";
 export interface CustomFastifyRequest extends FastifyRequest {
   user?: { id: string };
 }
-
+export interface CustomFastifyRequestUser
+  extends FastifyRequest<{ Params: { id: string } }> {
+  user?: { id: string };
+}
 export function EnsureAuthenticated(
   request: CustomFastifyRequest,
   reply: FastifyReply,
