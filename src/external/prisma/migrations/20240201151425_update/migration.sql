@@ -4,6 +4,8 @@ CREATE TABLE "User" (
     "name" TEXT NOT NULL,
     "email" TEXT NOT NULL,
     "password" TEXT NOT NULL,
+    "role" TEXT NOT NULL,
+    "act_area" TEXT NOT NULL,
     "createAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updateAt" TIMESTAMP(3) NOT NULL,
 
@@ -33,6 +35,8 @@ CREATE TABLE "Refresh_Token" (
 CREATE TABLE "Curriculum" (
     "id" TEXT NOT NULL,
     "title" TEXT NOT NULL,
+    "salary" DOUBLE PRECISION NOT NULL,
+    "linkedin" TEXT NOT NULL,
     "description" TEXT NOT NULL,
     "userId" TEXT NOT NULL,
 

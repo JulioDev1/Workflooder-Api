@@ -13,6 +13,8 @@ export default class RegisterController {
         email,
         password,
         number: [{ ddd, number }],
+        role,
+        act_area,
       } = body;
 
       const user = await this.useCase.execute({
@@ -20,6 +22,8 @@ export default class RegisterController {
         email,
         password,
         number: [{ ddd, number }],
+        role,
+        act_area,
       });
 
       reply.send(user);

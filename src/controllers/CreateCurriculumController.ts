@@ -13,14 +13,19 @@ export default class CreateCurriculumController {
         title,
         technology: [{ name }],
         description,
+        salary,
+        linkedin,
       } = body;
+
+      console.log(title, description, salary, linkedin);
       const curriculum = await this.usecase.execute({
         title,
         technology: [{ name }],
         description,
+        linkedin,
+        salary,
         userId: request.user!.id,
       });
-
       reply.send(curriculum);
     } catch (error: any) {
       reply.code(500).send({ error: true, message: error.message });

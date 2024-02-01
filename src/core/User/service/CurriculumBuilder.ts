@@ -6,6 +6,8 @@ type Input = {
   description: string;
   technology: Technology[];
   title: string;
+  linkedin: string;
+  salary: number;
   userId: string;
 };
 
@@ -17,11 +19,15 @@ export class CurriculumBuilder implements UseCase<Curriculum, Curriculum> {
     technology: [{ name }],
     title,
     userId,
+    salary,
+    linkedin,
   }: Input): Promise<Curriculum> {
     const createCv = await this.repository.createCurriculum({
       description,
       technology: [{ name }],
       title,
+      salary,
+      linkedin,
       userId,
     });
     return createCv;

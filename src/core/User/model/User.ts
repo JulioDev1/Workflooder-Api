@@ -9,6 +9,8 @@ export interface User {
   name: string;
   email: string;
   password: string;
+  act_area: string;
+  role: string;
   number: Number[];
   createAt?: Date;
   updateAt?: Date;
@@ -27,6 +29,8 @@ export interface Curriculum {
   id?: string;
   title: string;
   technology: Technology[];
+  linkedin: string;
+  salary: number;
   description: string;
   userId: string;
 }
@@ -34,5 +38,7 @@ export interface CurriculumInput {
   id?: string;
   title: string;
   description: string;
+  linkedin: string;
+  salary: number;
   userId: string;
 }

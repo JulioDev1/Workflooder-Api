@@ -12,6 +12,8 @@ model User  {
   email           String     @unique
   password        String
   number          Number[]
+  role            String
+  act_area        String
   createAt        DateTime    @default(now())
   refresh_Tokens  Refresh_Token?
   curriculum      Curriculum?
@@ -37,6 +39,8 @@ model Curriculum  {
    id String @id @unique @default(uuid())
    title String
    technology Technology[]
+   salary   Float
+   linkedin String
    description String
    user User @relation(fields: [userId], references: [id])
    userId String @unique

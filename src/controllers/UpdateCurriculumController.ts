@@ -6,6 +6,8 @@ type Data = {
   title: string;
   description: string;
   name: string;
+  salary: number;
+  linkedin: string;
 };
 
 export default class UpdateCurriculumController {
@@ -15,7 +17,7 @@ export default class UpdateCurriculumController {
       const body = request.body as Data;
       const { id } = request.params;
 
-      const { title, description, name } = body;
+      const { title, description, name, salary, linkedin } = body;
 
       const curriculum = await this.useCase.execute({
         title,
@@ -23,6 +25,8 @@ export default class UpdateCurriculumController {
         userId: request.user!.id,
         id,
         name,
+        salary,
+        linkedin,
       });
       reply.send(curriculum);
     } catch (error) {

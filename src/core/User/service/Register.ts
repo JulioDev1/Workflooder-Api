@@ -8,6 +8,8 @@ export type Input = {
   email: string;
   password: string;
   number: Number[];
+  role: string;
+  act_area: string;
 };
 export class Register implements UseCase<Input, Input> {
   private encrypt: PasswordHash;
@@ -20,6 +22,8 @@ export class Register implements UseCase<Input, Input> {
     email,
     password,
     number: [{ ddd, number }],
+    role,
+    act_area,
   }: Input): Promise<Input> {
     const emailExists = await this.repository.findByEmail(email);
 
@@ -31,6 +35,8 @@ export class Register implements UseCase<Input, Input> {
       email,
       password: hashed,
       number: [{ ddd, number }],
+      role,
+      act_area,
     });
 
     return user;

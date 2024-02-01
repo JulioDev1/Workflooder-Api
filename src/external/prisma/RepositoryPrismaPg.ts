@@ -24,12 +24,21 @@ export default class RepositoryPrismaPg implements RepositoryUser {
     });
   }
 
-  create({ name, email, password, number }: User): Promise<User> {
+  create({
+    name,
+    email,
+    password,
+    number,
+    act_area,
+    role,
+  }: User): Promise<User> {
     return this.prisma.user.create({
       data: {
         name,
         email,
         password,
+        act_area,
+        role,
         updateAt: new Date(),
         number: {
           create: number.map((data) => ({
@@ -38,6 +47,7 @@ export default class RepositoryPrismaPg implements RepositoryUser {
           })),
         },
       },
+
       include: { number: true },
     });
   }
@@ -77,6 +87,8 @@ export default class RepositoryPrismaPg implements RepositoryUser {
         email: true,
         password: false,
         number: true,
+        act_area: true,
+        role: true,
       },
     });
   }
@@ -86,6 +98,8 @@ export default class RepositoryPrismaPg implements RepositoryUser {
     technology,
     description,
     userId,
+    salary,
+    linkedin,
   }: Curriculum): Promise<Curriculum> {
     return this.prisma.curriculum.create({
       data: {
@@ -95,7 +109,8 @@ export default class RepositoryPrismaPg implements RepositoryUser {
             data: technology.map((tecs: Technology) => ({ name: tecs.name })),
           },
         },
-
+        linkedin,
+        salary,
         description,
         userId,
       },
@@ -112,6 +127,8 @@ export default class RepositoryPrismaPg implements RepositoryUser {
         technology: true,
         description: true,
         userId: true,
+        salary: true,
+        linkedin: true,
       },
     });
   }
@@ -126,6 +143,8 @@ export default class RepositoryPrismaPg implements RepositoryUser {
         technology: true,
         description: true,
         userId: true,
+        salary: true,
+        linkedin: true,
       },
     });
   }
@@ -140,6 +159,8 @@ export default class RepositoryPrismaPg implements RepositoryUser {
         technology: true,
         description: true,
         userId: true,
+        salary: true,
+        linkedin: true,
       },
     });
   }
@@ -154,6 +175,8 @@ export default class RepositoryPrismaPg implements RepositoryUser {
         technology: true,
         description: true,
         userId: true,
+        salary: true,
+        linkedin: true,
       },
     });
   }
@@ -161,6 +184,8 @@ export default class RepositoryPrismaPg implements RepositoryUser {
   updateUserCurriculum({
     description,
     title,
+    linkedin,
+    salary,
     userId,
     id,
   }: CurriculumInput): Promise<CurriculumInput> {
@@ -172,6 +197,8 @@ export default class RepositoryPrismaPg implements RepositoryUser {
         title,
         description,
         userId,
+        linkedin,
+        salary,
       },
       include: {
         technology: true,
@@ -179,7 +206,8 @@ export default class RepositoryPrismaPg implements RepositoryUser {
     });
   }
   updateTechnology({ curriculumId, name }: Technology): Promise<any> {
-    return this.prisma.technology.updateMany({
+    console.log(name);
+    return this.prisma.technology.update({
       where: { curriculumId },
       data: { name },
     });
