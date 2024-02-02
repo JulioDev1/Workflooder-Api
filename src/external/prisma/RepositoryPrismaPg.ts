@@ -205,10 +205,20 @@ export default class RepositoryPrismaPg implements RepositoryUser {
       },
     });
   }
-  updateTechnology({ curriculumId, name }: Technology): Promise<any> {
-    console.log(name);
+
+  findIdTechnology(techId: string) {
+    return this.prisma.technology.findUnique({
+      where: {
+        id: techId,
+      },
+    });
+  }
+
+  updateTechnology({ name, id }: Technology): Promise<any> {
     return this.prisma.technology.update({
-      where: { curriculumId },
+      where: {
+        id: id,
+      },
       data: { name },
     });
   }

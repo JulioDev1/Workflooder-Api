@@ -1,5 +1,5 @@
-import { UseCase } from "src/core/shared/useCase";
-import RepositoryPrismaPg from "src/external/prisma/RepositoryPrismaPg";
+import { UseCase } from "../../../core/shared/useCase";
+import RepositoryPrismaPg from "../../../external/prisma/RepositoryPrismaPg";
 import { Technology } from "../model/User";
 
 type Output = {

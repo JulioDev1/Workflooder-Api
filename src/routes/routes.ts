@@ -18,6 +18,7 @@ import getUserProfileController from "../controllers/GetUserProfileController";
 import { RefreshTokenController } from "../controllers/RefreshTokenController";
 import RegisterController from "../controllers/RegisterController";
 import UpdateCurriculumController from "../controllers/UpdateCurriculumController";
+import UpdateTechnologyController from "../controllers/UpdateTechnologyController";
 import { RefreshTokenUser } from "../core/Tokens/RefreshToken";
 import { Authenticate } from "../core/User/service/Authenticate";
 import { CurriculumBuilder } from "../core/User/service/CurriculumBuilder";
@@ -27,6 +28,7 @@ import { GetUserCurriculumLogged } from "../core/User/service/GetUserCurriculuml
 import { GetUserProfile } from "../core/User/service/GetUserProfile";
 import { Register } from "../core/User/service/Register";
 import { UpdateCurriculum } from "../core/User/service/UpdateCurrriculum";
+import { UpdateTechnology } from "../core/User/service/UpdateTechnology";
 import RepositoryPrismaPg from "../external/prisma/RepositoryPrismaPg";
 
 export async function routes(
@@ -42,6 +44,7 @@ export async function routes(
   const getUserById = new GetUserCurriculum(repository);
   const getUserLogged = new GetUserCurriculumLogged(repository);
   const updateCurriculum = new UpdateCurriculum(repository);
+  const updateTechnology = new UpdateTechnology(repository);
   const getUserProfile = new GetUserProfile(repository);
 
   fastify.post(
@@ -130,6 +133,17 @@ export async function routes(
     { preHandler: EnsureAuthenticated },
     async (request: CustomFastifyRequestUser, reply: FastifyReply) => {
       return new getUserProfileController(getUserProfile).handle(
+        request,
+        reply
+      );
+    }
+  );
+
+  fastify.put<{ Params: { id: string } }>(
+    "/update-tecnologhy/:id",
+    { preHandler: EnsureAuthenticated },
+    async (request: CustomFastifyRequestUser, reply: FastifyReply) => {
+      return new UpdateTechnologyController(updateTechnology).handle(
         request,
         reply
       );

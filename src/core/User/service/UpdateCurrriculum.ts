@@ -7,20 +7,11 @@ type Input = {
   linkedin: string;
   salary: number;
   userId: string;
-  name: string;
 };
 
 export class UpdateCurriculum implements UseCase<Input, any> {
   constructor(readonly repository: RepositoryPrismaPg) {}
-  async execute({
-    title,
-    description,
-    userId,
-    name,
-    id,
-    salary,
-    linkedin,
-  }: Input) {
+  async execute({ title, description, userId, id, salary, linkedin }: Input) {
     const findCurriculum = await this.repository.getCurriculumById(id);
 
     if (!findCurriculum) throw new Error("Curriculum not found");
@@ -34,11 +25,6 @@ export class UpdateCurriculum implements UseCase<Input, any> {
       userId,
     });
 
-    const updatedTechnologies = await this.repository.updateTechnology({
-      curriculumId: id,
-      name: name,
-    });
-
-    return { updatedCurriculum, updatedTechnologies };
+    return updatedCurriculum;
   }
 }

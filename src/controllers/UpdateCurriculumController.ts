@@ -5,7 +5,6 @@ import { UpdateCurriculum } from "../core/User/service/UpdateCurrriculum";
 type Data = {
   title: string;
   description: string;
-  name: string;
   salary: number;
   linkedin: string;
 };
@@ -17,14 +16,13 @@ export default class UpdateCurriculumController {
       const body = request.body as Data;
       const { id } = request.params;
 
-      const { title, description, name, salary, linkedin } = body;
+      const { title, description, salary, linkedin } = body;
 
       const curriculum = await this.useCase.execute({
         title,
         description,
         userId: request.user!.id,
         id,
-        name,
         salary,
         linkedin,
       });
