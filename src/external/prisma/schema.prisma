@@ -17,6 +17,7 @@ model User  {
   createAt        DateTime    @default(now())
   refresh_Tokens  Refresh_Token?
   curriculum      Curriculum?
+  messages        Message[]
   updateAt        DateTime
 }
 
@@ -51,4 +52,11 @@ model Technology{
   name String
   curriculum Curriculum @relation(fields: [curriculumId], references: [id])
   curriculumId String @unique
+}
+
+model Message{
+  id          String  @id @unique @default(uuid())
+  content     String  
+  user        User    @relation(fields: [userId], references: [id])
+  userId String       @unique
 }
