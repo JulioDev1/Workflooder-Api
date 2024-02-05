@@ -2,6 +2,7 @@ import { PrismaClient } from "@prisma/client";
 import {
   Curriculum,
   CurriculumInput,
+  Message,
   Technology,
   User,
 } from "../../core/User/model/User";
@@ -214,12 +215,39 @@ export default class RepositoryPrismaPg implements RepositoryUser {
     });
   }
 
-  updateTechnology({ name, id }: Technology): Promise<any> {
+  updateTechnology({ name, id }: Technology): Promise<Technology> {
     return this.prisma.technology.update({
       where: {
         id: id,
       },
       data: { name },
+    });
+  }
+
+  getMessage(id: string): Promise<Message | null> {
+    return this.prisma.message.findUnique({
+      where: {
+        id: id,
+      },
+      select: {
+        content: true,
+        senderId: true,
+        receiverId: true,
+        createdAt: true,
+      },
+    });
+  }
+  createMessage({ content, senderId, receiverId }: Message): Promise<Message> {
+    return this.prisma.message.create({
+      data: {
+        content,
+        senderId,
+        receiverId,
+      },
+      include: {
+        sender: true,
+        receiver: true,
+      },
     });
   }
 }

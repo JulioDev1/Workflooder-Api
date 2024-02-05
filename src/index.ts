@@ -1,5 +1,5 @@
-import fastify, { FastifyInstance } from "fastify";
 import cors from "@fastify/cors";
+import fastify, { FastifyInstance } from "fastify";
 import { routes } from "./routes/routes";
 
 const server: FastifyInstance = fastify();
@@ -10,7 +10,7 @@ const start = async () => {
 
   try {
     await server.listen({ port: 8080 });
-    console.log("rodando uwu");
+    console.log("rodando UwU");
   } catch (error) {
     process.exit(1);
   }

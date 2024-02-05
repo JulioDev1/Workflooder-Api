@@ -17,6 +17,7 @@ import { GetUserByIdController } from "../controllers/GetUserByIDController";
 import getUserProfileController from "../controllers/GetUserProfileController";
 import { RefreshTokenController } from "../controllers/RefreshTokenController";
 import RegisterController from "../controllers/RegisterController";
+import SendMessageController from "../controllers/SendMessageController";
 import UpdateCurriculumController from "../controllers/UpdateCurriculumController";
 import UpdateTechnologyController from "../controllers/UpdateTechnologyController";
 import { RefreshTokenUser } from "../core/Tokens/RefreshToken";
@@ -27,6 +28,7 @@ import { GetUserCurriculum } from "../core/User/service/GetUserCurriculum";
 import { GetUserCurriculumLogged } from "../core/User/service/GetUserCurriculumlogged";
 import { GetUserProfile } from "../core/User/service/GetUserProfile";
 import { Register } from "../core/User/service/Register";
+import { SendMessage } from "../core/User/service/SendMessage";
 import { UpdateCurriculum } from "../core/User/service/UpdateCurrriculum";
 import { UpdateTechnology } from "../core/User/service/UpdateTechnology";
 import RepositoryPrismaPg from "../external/prisma/RepositoryPrismaPg";
@@ -46,7 +48,7 @@ export async function routes(
   const updateCurriculum = new UpdateCurriculum(repository);
   const updateTechnology = new UpdateTechnology(repository);
   const getUserProfile = new GetUserProfile(repository);
-
+  const sendMessage = new SendMessage(repository);
   fastify.post(
     "/register-user",
     async (request: FastifyRequest, reply: FastifyReply) => {
@@ -147,6 +149,14 @@ export async function routes(
         request,
         reply
       );
+    }
+  );
+
+  fastify.post<{ Params: { id: string } }>(
+    "/send-message/:id",
+    { preHandler: EnsureAuthenticated },
+    async (request: CustomFastifyRequestUser, reply: FastifyReply) => {
+      return new SendMessageController(sendMessage).handle(request, reply);
     }
   );
 }
