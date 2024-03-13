@@ -1,19 +1,21 @@
 import cors from "@fastify/cors";
 import fastify, { FastifyInstance } from "fastify";
+import { socketConfig } from "./adpater/socket";
 import { routes } from "./routes/routes";
 
-const server: FastifyInstance = fastify();
+export const app: FastifyInstance = fastify();
+app.register(cors, {
+  origin: "*",
+  methods: ["GET", "POST", "PUT"],
+});
 
-const start = async () => {
-  await server.register(cors);
-  await server.register(routes);
+export const sockets = socketConfig(app);
 
-  try {
-    await server.listen({ port: 8080 });
-    console.log("rodando UwU");
-  } catch (error) {
-    process.exit(1);
-  }
-};
-
-start();
+app.register(routes);
+try {
+  app.listen({ port: 8080 }, () => {
+    console.log("Server running on port 8080");
+  });
+} catch (error) {
+  console.log(error);
+}

@@ -49,6 +49,7 @@ export async function routes(
   const updateTechnology = new UpdateTechnology(repository);
   const getUserProfile = new GetUserProfile(repository);
   const sendMessage = new SendMessage(repository);
+
   fastify.post(
     "/register-user",
     async (request: FastifyRequest, reply: FastifyReply) => {

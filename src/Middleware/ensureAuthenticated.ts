@@ -4,10 +4,12 @@ import { verify } from "jsonwebtoken";
 export interface CustomFastifyRequest extends FastifyRequest {
   user?: { id: string };
 }
+
 export interface CustomFastifyRequestUser
   extends FastifyRequest<{ Params: { id: string } }> {
   user?: { id: string };
 }
+
 export function EnsureAuthenticated(
   request: CustomFastifyRequest,
   reply: FastifyReply,
@@ -23,6 +25,7 @@ export function EnsureAuthenticated(
     const payload = verify(token, "5b1305ce-2409-4370-bbe4-5b201de352d3");
 
     request.user = payload as any;
+
     return done();
   } catch (error) {
     reply.code(401).send("invalid token" + error);

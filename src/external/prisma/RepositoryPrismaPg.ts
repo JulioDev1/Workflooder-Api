@@ -84,6 +84,7 @@ export default class RepositoryPrismaPg implements RepositoryUser {
         id: id,
       },
       select: {
+        id: true,
         name: true,
         email: true,
         password: false,
@@ -244,6 +245,7 @@ export default class RepositoryPrismaPg implements RepositoryUser {
         senderId,
         receiverId,
       },
+
       include: {
         sender: true,
         receiver: true,

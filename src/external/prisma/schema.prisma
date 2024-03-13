@@ -18,7 +18,7 @@ model User  {
   refresh_Tokens   Refresh_Token?
   curriculum       Curriculum?
   sentMessages     Message[]   @relation("SenderMessage")
-  
+  status           Boolean     @default(false)
   receiverMessages Message[]   @relation("ReceiverMessage")
   updateAt         DateTime
 }
