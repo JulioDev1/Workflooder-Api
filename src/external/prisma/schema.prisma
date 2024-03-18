@@ -20,6 +20,8 @@ model User  {
   sentMessages     Message[]   @relation("SenderMessage")
   status           Boolean     @default(false)
   receiverMessages Message[]   @relation("ReceiverMessage")
+  chats            Chat[] 
+
   updateAt         DateTime
 }
 
@@ -56,6 +58,12 @@ model Technology{
   curriculumId String @unique
 }
 
+model Chat{
+  id          String        @id @unique @default(uuid())
+  members     User[]
+  message     Message[]
+}
+
 model Message{
   id          String        @id @unique @default(uuid())
   content     String
@@ -64,4 +72,6 @@ model Message{
   receiver    User          @relation("ReceiverMessage",fields: [receiverId], references: [id])
   receiverId  String        
   createdAt   DateTime      @default(now())
+  chat        Chat          @relation(fields:[chatId], references: [id])
+  chatId      String        
 }

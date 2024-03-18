@@ -47,5 +47,6 @@ export interface Message {
   content: string;
   senderId: string;
   receiverId: string;
+  chatId: string;
   createdAt?: Date;
 }

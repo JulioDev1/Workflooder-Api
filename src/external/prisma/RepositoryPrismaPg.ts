@@ -225,25 +225,53 @@ export default class RepositoryPrismaPg implements RepositoryUser {
     });
   }
 
-  getMessage(id: string): Promise<Message | null> {
-    return this.prisma.message.findUnique({
-      where: {
-        id: id,
-      },
-      select: {
-        content: true,
-        senderId: true,
-        receiverId: true,
-        createdAt: true,
+  createChat(senderId: string, receiverId: string) {
+    return this.prisma.chat.create({
+      data: {
+        members: {
+          connect: [{ id: senderId }, { id: receiverId }],
+        },
+        message: {
+          create: [],
+        },
       },
     });
   }
-  createMessage({ content, senderId, receiverId }: Message): Promise<Message> {
+
+  chatExist(senderId: string, receiverId: string) {
+    return this.prisma.chat.findFirst({
+      where: {
+        AND: [
+          { members: { some: { id: senderId } } },
+          { members: { some: { id: receiverId } } },
+        ],
+      },
+    });
+  }
+
+  getChatMessage(id: string) {
+    return this.prisma.chat.findUnique({
+      where: {
+        id: id,
+      },
+      include: {
+        members: true,
+        message: true,
+      },
+    });
+  }
+  createMessage({
+    content,
+    senderId,
+    receiverId,
+    chatId,
+  }: Message): Promise<Message> {
     return this.prisma.message.create({
       data: {
         content,
         senderId,
         receiverId,
+        chatId,
       },
 
       include: {

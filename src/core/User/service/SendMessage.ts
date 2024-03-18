@@ -12,16 +12,25 @@ export class SendMessage implements UseCase<Input, Message> {
   constructor(readonly repository: RepositoryPrismaPg) {}
   async execute({ receiverId, content, senderId }: Input): Promise<Message> {
     console.log(receiverId + ": " + receiverId + "Id + " + content);
+
     const userReceiver = await this.repository.getUserProfile(receiverId);
-    // sockets.on("newMessage", (message: Message) => {
-    //   console.log(message);
-    // });
+
     if (!userReceiver) throw new Error("receiver not found");
+
+    if (receiverId === senderId)
+      throw new Error("receiver dont be sender user!");
+
+    let chat = await this.repository.chatExist(senderId, receiverId);
+
+    if (!chat) {
+      chat = await this.repository.createChat(senderId, receiverId);
+    }
 
     const message = await this.repository.createMessage({
       receiverId,
       content,
       senderId,
+      chatId: chat.id,
     });
 
     if (message) {
