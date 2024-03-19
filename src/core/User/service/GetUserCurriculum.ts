@@ -5,6 +5,10 @@ import { Curriculum } from "../model/User";
 export class GetUserCurriculum implements UseCase<string, Curriculum | null> {
   constructor(readonly repository: RepositoryPrismaPg) {}
   async execute(id: string): Promise<Curriculum | null> {
-    return await this.repository.getUserCurriculum(id);
+    const curriculum = await this.repository.getUserCurriculum(id);
+    if (!curriculum) {
+      throw new Error(`Could not find curriculum`);
+    }
+    return curriculum;
   }
 }

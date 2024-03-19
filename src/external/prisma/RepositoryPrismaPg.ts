@@ -250,6 +250,7 @@ export default class RepositoryPrismaPg implements RepositoryUser {
   }
 
   getChatMessage(id: string) {
+    console.log(id);
     return this.prisma.chat.findUnique({
       where: {
         id: id,

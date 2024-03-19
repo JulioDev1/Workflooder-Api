@@ -12,6 +12,7 @@ import {
 import AuthenticateController from "../controllers/AuthenticateController";
 import CreateCurriculumController from "../controllers/CreateCurriculumController";
 import { GetAllCurriculumController } from "../controllers/GetAllCurriculumController";
+import { GetChatControlller } from "../controllers/GetChatController";
 import { GetCurriculumUserLoggedController } from "../controllers/GetCurriculumUserLoggedController";
 import { GetUserByIdController } from "../controllers/GetUserByIDController";
 import getUserProfileController from "../controllers/GetUserProfileController";
@@ -24,6 +25,7 @@ import { RefreshTokenUser } from "../core/Tokens/RefreshToken";
 import { Authenticate } from "../core/User/service/Authenticate";
 import { CurriculumBuilder } from "../core/User/service/CurriculumBuilder";
 import { GetAllCurriculum } from "../core/User/service/GetAllCurriculum";
+import { GetChatMessages } from "../core/User/service/GetChatMessage";
 import { GetUserCurriculum } from "../core/User/service/GetUserCurriculum";
 import { GetUserCurriculumLogged } from "../core/User/service/GetUserCurriculumlogged";
 import { GetUserProfile } from "../core/User/service/GetUserProfile";
@@ -49,6 +51,7 @@ export async function routes(
   const updateTechnology = new UpdateTechnology(repository);
   const getUserProfile = new GetUserProfile(repository);
   const sendMessage = new SendMessage(repository);
+  const getChatMessage = new GetChatMessages(repository);
 
   fastify.post(
     "/register-user",
@@ -158,6 +161,14 @@ export async function routes(
     { preHandler: EnsureAuthenticated },
     async (request: CustomFastifyRequestUser, reply: FastifyReply) => {
       return new SendMessageController(sendMessage).handle(request, reply);
+    }
+  );
+
+  fastify.get<{ Params: { id: string } }>(
+    "/get-chat-message/:id",
+    { preHandler: EnsureAuthenticated },
+    async (request: CustomFastifyRequestUser, reply: FastifyReply) => {
+      return new GetChatControlller(getChatMessage).handle(request, reply);
     }
   );
 }
