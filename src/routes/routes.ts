@@ -11,6 +11,7 @@ import {
 } from "../Middleware/ensureAuthenticated";
 import AuthenticateController from "../controllers/AuthenticateController";
 import CreateCurriculumController from "../controllers/CreateCurriculumController";
+import { GetAllChatController } from "../controllers/GetAllChatController";
 import { GetAllCurriculumController } from "../controllers/GetAllCurriculumController";
 import { GetChatControlller } from "../controllers/GetChatController";
 import { GetCurriculumUserLoggedController } from "../controllers/GetCurriculumUserLoggedController";
@@ -24,6 +25,7 @@ import UpdateTechnologyController from "../controllers/UpdateTechnologyControlle
 import { RefreshTokenUser } from "../core/Tokens/RefreshToken";
 import { Authenticate } from "../core/User/service/Authenticate";
 import { CurriculumBuilder } from "../core/User/service/CurriculumBuilder";
+import { GetAllChat } from "../core/User/service/GetAllChat";
 import { GetAllCurriculum } from "../core/User/service/GetAllCurriculum";
 import { GetChatMessages } from "../core/User/service/GetChatMessage";
 import { GetUserCurriculum } from "../core/User/service/GetUserCurriculum";
@@ -52,6 +54,7 @@ export async function routes(
   const getUserProfile = new GetUserProfile(repository);
   const sendMessage = new SendMessage(repository);
   const getChatMessage = new GetChatMessages(repository);
+  const getAllChat = new GetAllChat(repository);
 
   fastify.post(
     "/register-user",
@@ -169,6 +172,13 @@ export async function routes(
     { preHandler: EnsureAuthenticated },
     async (request: CustomFastifyRequestUser, reply: FastifyReply) => {
       return new GetChatControlller(getChatMessage).handle(request, reply);
+    }
+  );
+  fastify.get(
+    "/get-all-chat",
+    { preHandler: EnsureAuthenticated },
+    async (request: CustomFastifyRequest, reply: FastifyReply) => {
+      return new GetAllChatController(getAllChat).handle(request, reply);
     }
   );
 }

@@ -281,4 +281,26 @@ export default class RepositoryPrismaPg implements RepositoryUser {
       },
     });
   }
+  getAllChat(senderId: string) {
+    return this.prisma.chat.findMany({
+      where: {
+        members: { some: { id: senderId } },
+      },
+      include: {
+        members: true,
+        message: {
+          select: {
+            content: true,
+            senderId: true,
+            receiverId: true,
+            createdAt: true,
+          },
+          orderBy: {
+            createdAt: "desc",
+          },
+          take: 1,
+        },
+      },
+    });
+  }
 }
