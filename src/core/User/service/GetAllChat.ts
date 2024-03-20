@@ -9,16 +9,25 @@ export class GetAllChat implements UseCase<string, any> {
     if (!newChat) {
       return { message: "not have messages" };
     }
+
     const member = newChat.map((chat) => {
       const lastMessage = chat.message[0];
+
       return {
         lastMessage: lastMessage.content,
+
         name: chat.members.map((member) => {
           return member.name;
         }),
+
+        receiverId: lastMessage.receiverId,
+
+        senderId: lastMessage.senderId,
       };
     });
+
     console.log("aqui", member);
+
     return member;
   }
 }
