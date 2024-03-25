@@ -1,8 +1,8 @@
 Arguments: 
-  C:\Program Files\nodejs\node.exe C:\Program Files (x86)\Yarn\bin\yarn.js add -D fastify-socket.io @types/fastify-socket-io
+  C:\Program Files\nodejs\node.exe C:\Program Files (x86)\Yarn\bin\yarn.js add -D @types/serverless-http
 
 PATH: 
-  C:\Users\julio\AppData\Local\oh-my-posh;C:\Program Files\WindowsApps\Microsoft.PowerShell_7.4.1.0_x64__8wekyb3d8bbwe;C:\Program Files\Eclipse Adoptium\jdk-21.0.1.12-hotspot\bin;C:\Program Files (x86)\Common Files\Oracle\Java\javapath;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Windows\System32\OpenSSH\;C:\Program Files\Git\cmd;C:\Program Files\Git\mingw64\bin;C:\Program Files\Git\usr\bin;C:\Program Files (x86)\Yarn\bin\;C:\ProgramData\chocolatey\bin;C:\tools\gsudo\Current;C:\Program Files\dotnet\;C:\apache-maven-3.9.6\bin;C:\Program Files\nodejs\;C:\Users\julio\AppData\Local\Programs\Python\Python311\Scripts\;C:\Users\julio\AppData\Local\Programs\Python\Python311\;C:\Users\julio\AppData\Local\Microsoft\WindowsApps;C:\Users\julio\AppData\Local\Programs\Microsoft VS Code\bin;C:\Dart\dart-sdk\bin;C:\Flutter\flutter\bin;C:\Users\julio\AppData\Local\Yarn\bin;C:\Users\julio\.dotnet\tools;C:\Users\julio\AppData\Local\Programs\oh-my-posh\bin;C:\Users\julio\.bun\bin;C:\Users\julio\.dotnet\tools;C:\Users\julio\AppData\Roaming\npm
+  C:\Users\julio\AppData\Local\oh-my-posh;C:\Program Files\WindowsApps\Microsoft.PowerShell_7.4.1.0_x64__8wekyb3d8bbwe;C:\Program Files\Eclipse Adoptium\jdk-21.0.1.12-hotspot\bin;C:\Program Files (x86)\Common Files\Oracle\Java\javapath;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Windows\System32\OpenSSH\;C:\Program Files\Git\cmd;C:\Program Files\Git\mingw64\bin;C:\Program Files\Git\usr\bin;C:\Program Files (x86)\Yarn\bin\;C:\ProgramData\chocolatey\bin;C:\tools\gsudo\Current;C:\Program Files\dotnet\;C:\apache-maven-3.9.6\bin;C:\Program Files\nodejs\;C:\Program Files\Amazon\AWSCLIV2\;C:\Users\julio\AppData\Local\Programs\Python\Python311\Scripts\;C:\Users\julio\AppData\Local\Programs\Python\Python311\;C:\Users\julio\AppData\Local\Microsoft\WindowsApps;C:\Users\julio\AppData\Local\Programs\Microsoft VS Code\bin;C:\Dart\dart-sdk\bin;C:\Flutter\flutter\bin;C:\Users\julio\AppData\Local\Yarn\bin;C:\Users\julio\.dotnet\tools;C:\Users\julio\AppData\Local\Programs\oh-my-posh\bin;C:\Users\julio\.bun\bin;C:\Users\julio\.dotnet\tools;C:\Users\julio\AppData\Roaming\npm
 
 Yarn version: 
   1.22.19
@@ -14,7 +14,7 @@ Platform:
   win32 x64
 
 Trace: 
-  Error: https://registry.yarnpkg.com/@types%2ffastify-socket-io: Not found
+  Error: https://registry.yarnpkg.com/@types%2fserverless-http: Not found
       at params.callback [as _callback] (C:\Program Files (x86)\Yarn\lib\cli.js:66145:18)
       at self.callback (C:\Program Files (x86)\Yarn\lib\cli.js:140890:22)
       at Request.emit (node:events:518:28)
@@ -37,6 +37,7 @@ npm manifest:
       "@prisma/client": "^5.7.0",
       "@types/fastify-cors": "^2.1.0",
       "@types/fastify-jwt": "^0.8.1",
+      "@types/serverless": "^3.12.22",
       "bcrypt": "^5.1.1",
       "cors": "^2.8.5",
       "dayjs": "^1.11.10",
@@ -46,6 +47,7 @@ npm manifest:
       "jsonwebtoken": "^9.0.2",
       "nodemon": "^3.0.2",
       "postgresql": "^0.0.1",
+      "serverless-http": "^3.2.0",
       "ts-node": "^10.9.1"
     },
     "scripts": {
@@ -849,6 +851,11 @@ Lockfile:
     dependencies:
       undici-types "~5.26.4"
   
+  "@types/serverless@^3.12.22":
+    version "3.12.22"
+    resolved "https://registry.npmjs.org/@types/serverless/-/serverless-3.12.22.tgz"
+    integrity sha512-h6U8jv22T0N+9mcKBK2p/gVmcrKW7trUdVNhGemm8bct0lx3i/7svt1x0o/q87nMtOJMcqSvqFz63c7jM1X2Ew==
+  
   "@types/socket.io@^3.0.2":
     version "3.0.2"
     resolved "https://registry.npmjs.org/@types/socket.io/-/socket.io-3.0.2.tgz"
@@ -1629,7 +1636,7 @@ Lockfile:
   
   fastify-socket.io@^5.0.0:
     version "5.0.0"
-    resolved "https://registry.yarnpkg.com/fastify-socket.io/-/fastify-socket.io-5.0.0.tgz#7040d32a777a733b748b63ad0428b596a91b8865"
+    resolved "https://registry.npmjs.org/fastify-socket.io/-/fastify-socket.io-5.0.0.tgz"
     integrity sha512-BQKGLVSsLn9s4IXLWjwZRGTNuFbXt5bPY2qeXJUFYFtu/0BxLqcE2WMOrWUZdFWy12kuEvXC76ObsilQKeSfqg==
     dependencies:
       fastify-plugin "^4.5.1"
@@ -3048,6 +3055,11 @@ Lockfile:
     dependencies:
       lru-cache "^6.0.0"
   
+  serverless-http@^3.2.0:
+    version "3.2.0"
+    resolved "https://registry.yarnpkg.com/serverless-http/-/serverless-http-3.2.0.tgz#68acc7735f7c876733c04f038ee20f31f5ebfc9b"
+    integrity sha512-QvSyZXljRLIGqwcJ4xsKJXwkZnAVkse1OajepxfjkBXV0BMvRS5R546Z4kCBI8IygDzkQY0foNPC/rnipaE9pQ==
+  
   set-blocking@^2.0.0:
     version "2.0.0"
     resolved "https://registry.npmjs.org/set-blocking/-/set-blocking-2.0.0.tgz"
@@ -3338,7 +3350,7 @@ Lockfile:
   
   tslib@^2.6.1:
     version "2.6.2"
-    resolved "https://registry.yarnpkg.com/tslib/-/tslib-2.6.2.tgz#703ac29425e7b37cd6fd456e92404d46d1f3e4ae"
+    resolved "https://registry.npmjs.org/tslib/-/tslib-2.6.2.tgz"
     integrity sha512-AEYxH93jGFPn/a2iVAwW87VuUIkR1FVUKB77NwMF7nBTDkDrrT/Hpt/IrCJ0QXhW27jTBDcf5ZY7w6RiqTMw2Q==
   
   type-detect@4.0.8:

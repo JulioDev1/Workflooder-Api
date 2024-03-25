@@ -2,7 +2,6 @@ import cors from "@fastify/cors";
 import fastify, { FastifyInstance } from "fastify";
 import { socketConfig } from "./adpater/socket";
 import { routes } from "./routes/routes";
-
 export const app: FastifyInstance = fastify();
 app.register(cors, {
   origin: "*",
