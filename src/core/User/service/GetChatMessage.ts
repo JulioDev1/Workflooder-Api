@@ -5,8 +5,12 @@ import { Message } from "../model/User";
 type members = {
   id?: string;
   name: string;
+  email: string;
+  password: string;
+  role: string;
   act_area: string;
   createAt: Date;
+  status: boolean;
   updateAt: Date;
 };
 
@@ -19,8 +23,8 @@ export class GetChatMessages implements UseCase<string, any | null> {
       throw new Error(`Could not find chat message`);
     }
 
-    const member: members[] = newChat.members.map(
-      ({ password, email, status, role, ...rest }) => {
+    const member = newChat.members.map(
+      ({ password, email, status, role, ...rest }: members) => {
         return rest;
       }
     );
