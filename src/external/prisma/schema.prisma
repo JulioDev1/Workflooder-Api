@@ -74,4 +74,4 @@ model Message{
   createdAt   DateTime      @default(now())
   chat        Chat          @relation(fields:[chatId], references: [id])
   chatId      String        
-}
+} 

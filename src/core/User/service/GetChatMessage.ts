@@ -1,5 +1,14 @@
 import RepositoryPrismaPg from "src/external/prisma/RepositoryPrismaPg";
 import { UseCase } from "../../shared/useCase";
+import { Message } from "../model/User";
+
+type members = {
+  id?: string;
+  name: string;
+  act_area: string;
+  createAt: Date;
+  updateAt: Date;
+};
 
 export class GetChatMessages implements UseCase<string, any | null> {
   constructor(readonly repository: RepositoryPrismaPg) {}
@@ -10,12 +19,12 @@ export class GetChatMessages implements UseCase<string, any | null> {
       throw new Error(`Could not find chat message`);
     }
 
-    const member = newChat.members.map(
+    const member: members[] = newChat.members.map(
       ({ password, email, status, role, ...rest }) => {
         return rest;
       }
     );
-    const message = newChat.message.map((messages) => {
+    const message = newChat.message.map((messages: Message) => {
       return messages;
     });
 
