@@ -12,9 +12,7 @@ export const sockets = socketConfig(app);
 
 app.register(routes);
 try {
-  app.listen({ port: 8080 }, () => {
-    console.log("Server running on port 8080");
-  });
+  app.listen({ port: 8080 });
 } catch (error) {
   console.log(error);
 }

@@ -22,7 +22,7 @@
   "scripts": {
     "build": "tsc -p tsconfig.json",
     "start:dev": "tsc & nodemon src/index.ts",
-    "start": "tsc -w & nodemon src/index.ts",
+    "start": "nodemon src/index.ts",
     "start:prod": "pm2 start src/index.ts --name \"workflooder\" --watch --ignore-watch=\"node_modules\"",
     "stop": "pm2 stop workflooder",
     "restart": "pm2 restart workflooder",
